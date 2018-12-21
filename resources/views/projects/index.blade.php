@@ -9,7 +9,7 @@
            <ul>
             @foreach($projects as $project)
             <li>
-                    {{ $project->title }}     
+            <a href="{{ $project->path() }}">{{ $project->title }}</a>     
             </li>
             @endforeach
            </ul>

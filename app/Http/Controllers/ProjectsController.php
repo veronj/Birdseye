@@ -38,9 +38,9 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
         
-        request()->validate(['title' => 'required', 'description' => 'required']);
+        $attributes = request()->validate(['title' => 'required', 'description' => 'required']);
 
-        Project::create(request(['title', 'description']));
+        Project::create($attributes);
 
         return redirect('projects');
     }
@@ -51,9 +51,11 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        //
+        
+
+        return view('projects.show', compact('project'));
     }
 
     /**
