@@ -26,7 +26,6 @@ class ProjectsTest extends TestCase
 
         $this->assertDatabaseHas('projects', $attributes);
         
-
     }
 
     /** @test  */
@@ -39,5 +38,17 @@ class ProjectsTest extends TestCase
 
         $this->post('/projects', $attributes);
         $this->get('/projects')->assertSee($attributes['title']);
+    }
+
+    /** @test  */
+    public function a_project_requires_a_title()
+    {
+       $this->post('/projects', [])->assertSessionHasErrors('title');
+    }
+
+    /** @test  */
+    public function a_project_requires_a_description()
+    {
+       $this->post('/projects', [])->assertSessionHasErrors('description');
     }
 }
