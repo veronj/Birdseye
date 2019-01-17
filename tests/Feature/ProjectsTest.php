@@ -13,10 +13,19 @@ class ProjectsTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test  */
+    public function only_auth_user_can_post_a_project()
+    {
+        //$this->withoutExceptionHandling();
+
+        $attributes = factory('App\Project')->raw();
+        $this->post('/projects', $attributes)->assertRedirect('login');
+    }
+
+    /** @test  */
     public function a_user_can_create_a_project()
     {
-        $this->withoutExceptionHandling();
-
+        //$this->withoutExceptionHandling();
+        $this->actingAs(factory('App\User')->create());
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph
@@ -31,6 +40,7 @@ class ProjectsTest extends TestCase
     /** @test  */
     public function a_user_can_view_projects()
     {
+        $this->actingAs(factory('App\User')->create());
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph
@@ -43,8 +53,14 @@ class ProjectsTest extends TestCase
     /** @test  */
     public function a_user_can_view_a_project()
     {
-        $this->withoutExceptionHandling();
-        $project = factory('App\Project')->create();
+        //$this->withoutExceptionHandling();
+        $this->actingAs(factory('App\User')->create());
+        $attributes = [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph
+        ];
+
+        $project = $this->post('/projects', $attributes);
 
         $this->get($project->path())
             ->assertSee($project->title)
@@ -54,6 +70,7 @@ class ProjectsTest extends TestCase
     /** @test  */
     public function a_project_requires_a_title()
     {
+       $this->actingAs(factory('App\User')->create());
        $attributes = factory('App\Project')->raw(['title' => '']);
        $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
@@ -61,14 +78,10 @@ class ProjectsTest extends TestCase
     /** @test  */
     public function a_project_requires_a_description()
     {
-        $attributes = factory('App\Project')->raw(['description' => '']);
+       $this->actingAs(factory('App\User')->create()); 
+       $attributes = factory('App\Project')->raw(['description' => '']);
        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
 
-    /** @test  */
-    public function a_project_requires_a_owner()
-    {
-        $attributes = factory('App\Project')->raw(['owner_id' => '']);
-        $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
-    }
+    
 }

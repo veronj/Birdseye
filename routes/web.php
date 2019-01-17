@@ -24,7 +24,11 @@ Route::post('/projects', function () {
     App\Project::create(request(['title', 'description']));
 }); */
 
-Route::post('/projects', 'ProjectsController@store');
+Auth::routes();
+Route::post('/projects', 'ProjectsController@store')->middleware('auth');
 
 Route::get('/projects', 'ProjectsController@index');
 Route::get('/projects/{project}', 'ProjectsController@show');
+
+
+Route::get('/home', 'HomeController@index')->name('home');

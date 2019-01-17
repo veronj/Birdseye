@@ -20,7 +20,7 @@ class CreateProjectsTable extends Migration
             $table->string('description');
             $table->integer('owner_id');
 
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+           // $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
