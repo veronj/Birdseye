@@ -59,14 +59,14 @@ class ProjectsTest extends TestCase
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph
         ];
-
+        
         $project = $this->post('/projects', $attributes);
-dd($project);
+//dd($project);
         //'/project/' . $project->id, $project->path()
-
-        $this->get('/project/' . $project->id)
+        $this->assertDatabaseHas('projects', $attributes);
+        /* $this->get('/project/' . $project->id)
             ->assertSee($project->title)
-            ->assertSee($project->description);
+            ->assertSee($project->description); */
     }
 
     /** @test  */
@@ -93,5 +93,7 @@ dd($project);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
     }
+
+    
     
 }
