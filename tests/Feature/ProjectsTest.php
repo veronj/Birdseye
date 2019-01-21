@@ -61,8 +61,10 @@ class ProjectsTest extends TestCase
         ];
 
         $project = $this->post('/projects', $attributes);
+dd($project);
+        //'/project/' . $project->id, $project->path()
 
-        $this->get($project->path())
+        $this->get('/project/' . $project->id)
             ->assertSee($project->title)
             ->assertSee($project->description);
     }
@@ -83,5 +85,13 @@ class ProjectsTest extends TestCase
        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
 
+    /** @test  */
+    public function a_project_requires_an_owner()
+    {
+        $this->actingAs(factory('App\User')->create()); 
+        $attributes = factory('App\Project')->raw(['owner_id' => null]);
+
+        $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
+    }
     
 }
