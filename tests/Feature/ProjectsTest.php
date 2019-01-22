@@ -81,6 +81,16 @@ class ProjectsTest extends TestCase
        $attributes = factory('App\Project')->raw(['description' => '']);
        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
+
+    /** @test  */
+    public function an_auth_user_cannot_see_projects_of_others()
+    {
+        $this->actingAs(factory('App\User')->create());
+
+        $project = factory('App\Project')->create();
+
+        $this->get($project->path())->assertStatus(403);
+    }
    
     
 }
