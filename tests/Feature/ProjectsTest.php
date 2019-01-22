@@ -57,16 +57,11 @@ class ProjectsTest extends TestCase
     {
         //$this->withoutExceptionHandling();
         $this->actingAs(factory('App\User')->create());
-        $attributes = [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph
-        ];
-        
-        $project = $this->post('/projects', $attributes);
-//dd($project);
-        //'/project/' . $project->id, $project->path()
-        $this->assertDatabaseHas('projects', $attributes);
-        $this->get('/project/' . $project->id)
+                        
+        $project = factory('App\Project')->create(['owner_id' => auth()->user()->id, 'description' => "lorem ipsum", "title" => "This post"]);
+
+        $this->assertDatabaseHas('projects', ['id' => $project->id, 'description' => 'lorem ipsum']);
+        $this->get($project->path())
             ->assertSee($project->title)
             ->assertSee($project->description); 
     }
@@ -86,7 +81,6 @@ class ProjectsTest extends TestCase
        $attributes = factory('App\Project')->raw(['description' => '']);
        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
-
-    
+   
     
 }
