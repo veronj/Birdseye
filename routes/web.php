@@ -25,10 +25,13 @@ Route::post('/projects', function () {
 }); */
 
 Auth::routes();
-Route::post('/projects', 'ProjectsController@store')->middleware('auth');
 
-Route::get('/projects', 'ProjectsController@index')->middleware('auth');
-Route::get('/project/{project}', 'ProjectsController@show')->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/projects', 'ProjectsController@store');
+    Route::get('/projects', 'ProjectsController@index');
+    Route::get('/project/{project}', 'ProjectsController@show');
+});
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');
