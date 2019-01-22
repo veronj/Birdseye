@@ -64,9 +64,9 @@ class ProjectsTest extends TestCase
 //dd($project);
         //'/project/' . $project->id, $project->path()
         $this->assertDatabaseHas('projects', $attributes);
-        /* $this->get('/project/' . $project->id)
+        $this->get('/project/' . $project->id)
             ->assertSee($project->title)
-            ->assertSee($project->description); */
+            ->assertSee($project->description); 
     }
 
     /** @test  */

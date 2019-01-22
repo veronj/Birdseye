@@ -4,15 +4,21 @@
        <title>BirdsEye</title>
     </head>
     <body>
-        <h1>Board</h1>
+    <h1>Board {{ auth()->user()->id }}</h1>
        <div>
            <ul>
-            @foreach($projects as $project)
-            <li>
-            <a href="{{ $project->path() }}">{{ $project->title }}</a>     
-            </li>
-            @endforeach
+            @forelse($projects as $project)
+                <li>
+                <a href="{{ $project->path() }}">{{ $project->title }}</a>     
+                </li>
+            @empty
+                No project yet.
+
+            @endforelse
            </ul>
+           
+            
+           
        </div>
     </body>
 </html>
