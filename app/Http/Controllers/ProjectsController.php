@@ -26,7 +26,7 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        //
+        return view('projects.create');
     }
 
     /**
@@ -69,6 +69,7 @@ class ProjectsController extends Controller
 
         return view('projects.show', compact('project'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
