@@ -40,6 +40,8 @@ class ProjectsTest extends TestCase
     /** @test  */
     public function a_user_can_view_projects()
     {
+        $this->withoutExceptionHandling();
+
         $this->actingAs(factory('App\User')->create());
         $attributes = [
             'title' => $this->faker->sentence,
@@ -83,15 +85,6 @@ class ProjectsTest extends TestCase
        $this->actingAs(factory('App\User')->create()); 
        $attributes = factory('App\Project')->raw(['description' => '']);
        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
-    }
-
-    /** @test  */
-    public function a_project_requires_an_owner()
-    {
-        $this->actingAs(factory('App\User')->create()); 
-        $attributes = factory('App\Project')->raw(['owner_id' => null]);
-
-        $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
     }
 
     
