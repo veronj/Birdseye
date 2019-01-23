@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-       <title>BirdsEye</title>
-    </head>
-    <body>
+@extends('layouts.app')
+
+@section('content')
     <h1>Board {{ auth()->user()->id }}</h1>
        <div>
            <ul>
@@ -20,5 +17,4 @@
             
            
        </div>
-    </body>
-</html>
+@endsection
