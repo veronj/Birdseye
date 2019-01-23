@@ -2,7 +2,6 @@
 
 @section('content')
     <h1>Create a project {{ auth()->user()->id }}</h1>
-    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -45,6 +44,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         Submit
                                     </button>
+                                    <a href="/projects">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -52,5 +52,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    
 @endsection

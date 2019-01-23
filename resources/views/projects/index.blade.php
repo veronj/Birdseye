@@ -2,6 +2,7 @@
 
 @section('content')
     <h1>Board {{ auth()->user()->id }}</h1>
+    <a href="/projects/create">Create</a>
        <div>
            <ul>
             @forelse($projects as $project)
