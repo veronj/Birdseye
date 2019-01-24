@@ -9,13 +9,20 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class TasksTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
-     * A basic test example.
-     *
-     * @return void
+     *@test
      */
     public function a_project_can_have_tasks()
     {
-        $this->assertTrue(true);
+        $this->withoutExceptionHandling();
+
+        $this->signIn();
+        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
+
+        $this->post($project->path() . '/tasks', ['body' => 'Task 1']);
+
+        $this->get($project->path())
+             ->assertSee('Task 1');   
     }
 }
